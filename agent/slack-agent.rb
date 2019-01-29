@@ -25,7 +25,7 @@ end
   
 def send_to_server(data)
   # please change URI using your API
-  uri = URI.parse("http://localhost/attendance/slack.php")
+  uri = URI.parse("<YOUR_API_URL>")
 
   header = {'Content-Type': 'text/json'}
   user = {user: {
