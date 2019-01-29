@@ -4,7 +4,7 @@ require 'uri'
 require 'json'
 
 Slack.configure do |config|
-  config.token = 'xoxb-394364923254-412989660289-O28RIaem4CIMjcPHgwVTSyDC'
+  config.token = '<YOUR_API_TOKEN>'
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger::INFO
   raise 'Missing ENV[SLACK_API_TOKEN]!' unless config.token
@@ -15,18 +15,23 @@ def process(data)
   if data.text == 'IN' or data.text == 'in'
     puts "<@#{data.user}> IN at #{data.ts}"
     puts Time.at(DateTime.now.to_i)
+    send_to_server(data)
   elsif data.text == 'OUT' or data.text == 'out'
     puts "<@#{data.user}> OUT at #{data.ts}"
     puts Time.at(DateTime.now.to_i)
+    send_to_server(data)
   end
+end
   
+def send_to_server(data)
   # please change URI using your API
   uri = URI.parse("http://localhost/attendance/slack.php")
 
   header = {'Content-Type': 'text/json'}
   user = {user: {
                     slack_id: data.user,
-                    timestamp: Time.at(DateTime.now.to_i)
+                    timestamp: Time.at(DateTime.now.to_i),
+                    message: data.text
                 }
          }
 
@@ -58,6 +63,7 @@ client.on :message do |data|
     client.message channel: data.channel, text: "Sorry <@#{data.user}>, what?"
   else
     process(data)
+    client.message channel: data.channel, text: "<@#{data.user}> #{data.text} at #{Time.at(DateTime.now.to_i)}"
   end
 end
 
@@ -70,3 +76,4 @@ client.on :closed do |_data|
 end
 
 client.start!
+
