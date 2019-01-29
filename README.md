@@ -1,2 +1,16 @@
-# ayoabsen
-AyoAbsen adalah sistem informasi presensi sederhana menggunakan ARP request sebagai trigger kehadiran
+# Attendance Recorder Bot using Slack
+AyoAbsen adalah contoh integrasi Slack untuk presensi.
+
+## Installation
+
+Use the gem.
+
+```bash
+bundle install
+```
+
+or
+
+```bash
+gem install slack-ruby-client
+```
