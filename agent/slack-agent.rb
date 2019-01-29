@@ -4,7 +4,7 @@ require 'uri'
 require 'json'
 
 Slack.configure do |config|
-  config.token = 'xoxb-394364923254-412989660289-O28RIaem4CIMjcPHgwVTSyDC'
+  config.token = '<YOUR_SLACK_TOKEN>'
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger::INFO
   raise 'Missing ENV[SLACK_API_TOKEN]!' unless config.token
@@ -21,7 +21,7 @@ def process(data)
   end
   
   # please change URI using your API
-  uri = URI.parse("http://localhost/attendance/slack.php")
+  uri = URI.parse("<YOUR_API_URL>")
 
   header = {'Content-Type': 'text/json'}
   user = {user: {
